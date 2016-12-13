@@ -1,0 +1,24 @@
+{
+  "name": "donode",
+  "version": "0.0.1",
+  "description": "RESTful Node.js framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madhusudhand/donode.git"
+  },
+  "keywords": [
+    "node",
+    "restful"
+  ],
+  "author": "Madhusudana Rao Dollu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/madhusudhand/donode/issues"
+  },
+  "homepage": "https://github.com/madhusudhand/donode#readme"
+}
