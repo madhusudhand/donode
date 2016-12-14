@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/madhusudhand/donode#readme",
   "dependencies": {
+    "export-files": "^2.1.1",
     "querystring": "^0.2.0"
   }
 }
