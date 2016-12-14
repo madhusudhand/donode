@@ -1,6 +1,6 @@
 'use strict';
-const Router = require('./router');
-const Server = require('./server');
+const Router = require('./lib/router');
+const Server = require('./lib/server');
 
 module.exports = {
   Router,

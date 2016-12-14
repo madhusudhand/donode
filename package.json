@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/madhusudhand/donode/issues"
   },
-  "homepage": "https://github.com/madhusudhand/donode#readme"
+  "homepage": "https://github.com/madhusudhand/donode#readme",
+  "dependencies": {
+    "querystring": "^0.2.0"
+  }
 }
