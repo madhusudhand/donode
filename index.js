@@ -4,5 +4,5 @@ const Server = require('./lib/server');
 
 module.exports = {
   Router: new Router(),
-  Server,
+  Server: new Server(),
 }
