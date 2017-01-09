@@ -59,6 +59,3 @@ handler function (which is get method of HelloController) will get a request obj
 * queryParams
 * routeParams
 * body
-* method
-* url
-* headers
