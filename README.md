@@ -59,3 +59,10 @@ handler function (which is get method of HelloController) will get a request obj
 * queryParams
 * routeParams
 * body
+
+# Reference
+
+how to use: look at [donode-example](https://github.com/donode/donode-example)
+
+We are coming up with [donode-cli](https://github.com/donode/donode-cli), which generates the app for you.
+
