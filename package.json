@@ -24,5 +24,8 @@
   "dependencies": {
     "export-files": "^2.1.1",
     "querystring": "^0.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.1"
   }
 }
