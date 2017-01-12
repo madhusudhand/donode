@@ -1,15 +1,13 @@
 {
   "name": "donode",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Superfast & Lightweight node framework for building RESTful APIs.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/donode/donode.git"
+  "engines": {
+    "node": ">= 4.1.0"
   },
   "keywords": [
     "node",
@@ -17,6 +15,10 @@
   ],
   "author": "Madhusudana Rao Dollu",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donode/donode.git"
+  },
   "bugs": {
     "url": "https://github.com/donode/donode/issues"
   },
