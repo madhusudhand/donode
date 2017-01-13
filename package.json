@@ -1,6 +1,6 @@
 {
   "name": "donode",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Superfast & Lightweight node framework for building RESTful APIs.",
   "main": "index.js",
   "scripts": {
