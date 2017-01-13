@@ -60,9 +60,12 @@ handler function (which is get method of HelloController) will get a request obj
 * routeParams
 * body
 
+### Middleware
+
+Middleware objects are singletons
+
 # Reference
 
 how to use: look at [donode-example](https://github.com/donode/donode-example)
 
 We are coming up with [donode-cli](https://github.com/donode/donode-cli), which generates the app for you.
-
