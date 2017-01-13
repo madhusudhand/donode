@@ -2,6 +2,8 @@
 
 Superfast & Lightweight node framework for building RESTful APIs.
 
+**Use [donode-cli](https://www.npmjs.com/package/donode-cli), to get started.**
+
 ## Features
 
 * Flexible routing
@@ -23,7 +25,7 @@ Your routes are simple and takes the following format.
 }
 ```
 
-#### Sub-routes
+#### sub-routes
 
 A route object takes **children: []** which will have the same route pattern.
 
@@ -67,5 +69,3 @@ Middleware objects are singletons
 # Reference
 
 how to use: look at [donode-example](https://github.com/donode/donode-example)
-
-We are coming up with [donode-cli](https://github.com/donode/donode-cli), which generates the app for you.
