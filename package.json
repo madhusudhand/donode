@@ -1,7 +1,7 @@
 {
   "name": "donode",
-  "version": "0.0.2",
-  "description": "Superfast & Lightweight node framework for building RESTful APIs.",
+  "version": "1.0.0-alpha.1",
+  "description": "Super fast & Lightweight node framework to build RESTful APIs.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
