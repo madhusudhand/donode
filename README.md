@@ -59,11 +59,11 @@ A Route can take options like *middleware, headers, children*.
   handler: 'UserController@get',
   middleware: ['Auth'],
   headers: ['allow-cors'],
-  children: [
+  children: [{
   	path: '/settings',
     method: 'GET',
     handler: 'UserController@settings',
-  ]
+  }]
 }
 ```
 | Property | Type      |  Description  |
@@ -73,7 +73,7 @@ A Route can take options like *middleware, headers, children*.
 | handler  | string    |  A controller can be from a sub directory inside controllers directory. <br> *syntax*: **subdirectory/SomeController@method** <br/> here in this *SomeController* is located in *app/controllers/subdirectory*. |
 | middleware | array <br> or <br> object    |  A Middleware is an intermediate handler which can be used to perform some pre-checks such as Auth. <br>It is a class located in **app/middleware** directory and will be called before the **handler** method. <br><br> ***Array** Syntax*: **['Middleware1', 'Middleware2']** <br><br> A list of strings which are the names of the *classes* from *app/middleware* directory. When attached to a route, these will be called in the given order before the actual **handler**. <br><br> more details availale in **middleware** section. <br><br> ***Object** syntax*: <br>**{ <br> &nbsp;&nbsp; all: ['Middleware1'],<br> &nbsp;&nbsp; current: ['Middleware2'],<br> &nbsp;&nbsp; children: ['Middleware3'] <br> }** <br><br> -- **all**: attached to current the route and all its children. <br> -- **current**: attached only to current route. <br> -- **children**: attached to all the children, but not to current route. <br><br> **Note**: All are optional. Any of them can be given/ignored. <br><br> **Order**: middleware defined under **all, children** which are comming from parent routes (if any), then **all, current** of current route. |
 | headers  | array    | **headers** property allows to attach a set of headers that can to be sent along with the *response* for every request. <br> It takes an array of stings which are defined in **app/headers.js**. <br><br> **syntax**<br> ['allow-cors', 'json-content'] <br><br> **Note**: currently headers attached to a route will apply only to it. Not to children. Object syntax is yet to come !!!|
-| children | array    |  Routes can be nested with this attribute. <br> This takes list of sub-routes which takes same set of above properties. <br><br> **example route config** <br>{ <br> &nbsp;&nbsp;path: '/user/{id}', <br>&nbsp;&nbsp;method: 'GET',<br>&nbsp;&nbsp;handler: 'UserController@get',<br>&nbsp;&nbsp;children: [<br>&nbsp;&nbsp;&nbsp;&nbsp;path: '/settings', <br>&nbsp;&nbsp;&nbsp;&nbsp; method: 'POST', <br>&nbsp;&nbsp;&nbsp;&nbsp; handler: 'UserController@settings'<br>&nbsp;&nbsp;]<br> } <br><br> this will register the routes<br> **GET**: */user/{id}* <br> **POST**: */user/{id}/settings* |
+| children | array    |  Routes can be nested with this attribute. <br> This takes list of sub-routes which takes same set of above properties. <br><br> **example route config** <br>{ <br> &nbsp;&nbsp;path: '/user/{id}', <br>&nbsp;&nbsp;method: 'GET',<br>&nbsp;&nbsp;handler: 'UserController@get',<br>&nbsp;&nbsp;children: [{<br>&nbsp;&nbsp;&nbsp;&nbsp; path: '/settings', <br>&nbsp;&nbsp;&nbsp;&nbsp; method: 'POST', <br>&nbsp;&nbsp;&nbsp;&nbsp; handler: 'UserController@settings'<br>&nbsp;&nbsp;}]<br> } <br><br> this will register the routes<br> **GET**: */user/{id}* <br> **POST**: */user/{id}/settings* |
 
 
 
