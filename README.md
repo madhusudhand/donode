@@ -158,6 +158,10 @@ class Auth extends Middleware {
 module.exports = Auth;
 ```
 
+### Environments
+
+Specify environment specific settings in env/<environment>.env.js
+
 **Note**:
 
 When response.send() or response.reject() are called in a middleware, the call chain stops and handler method will not be called.
