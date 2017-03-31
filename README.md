@@ -9,7 +9,7 @@ highly modular approach.
 
 **Use [donode-cli](https://www.npmjs.com/package/donode-cli), to get started.**
 
-## Performance
+## High Performance
 
 Here are the [performance results](https://github.com/madhusudhand/node-performance).
 
