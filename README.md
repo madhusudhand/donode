@@ -2,36 +2,37 @@
 
 Superfast & Lightweight node framework for building RESTful APIs.
 
+**Simple** . **Flexible** . **High Performance** . **ES2015+**
+
 Enables developers to focus on writing reusable application logic in a
 highly modular approach.
 
 **Use [donode-cli](https://www.npmjs.com/package/donode-cli), to get started.**
 
-## Features
+## Performance
 
-* Highly Modular
-* Flexible routing
-* Built to work with ES2015
-* High Performance
+Here are the [performance results](https://github.com/madhusudhand/node-performance).
 
 ## Documentation
 
 ### App Structure
 
-When the app is created using [donode-cli](https://www.npmjs.com/package/donode-cli), it gives the following structure.
+Create the app using [donode-cli](https://www.npmjs.com/package/donode-cli),
+it is as **simple** and **modular** as
 
 - app
   - controllers
   - middleware
   - headers.js
   - routes.js
-- config
-  - config.js
+- env
+  - development.env.js
+  - production.env.js
 - app.js
 
 ### Routing
 
-Routes are kept as simple as possible and **app/routes.js** is the place where all your routes go.
+**One Place** for all your routes and they go into **app/routes.js**.
 
 A Route can be as *simple* as
 
@@ -121,6 +122,8 @@ It is a native *Node Request* object. Along with default properties it also cont
 | body | - | payload sent along with request |
 | headers | - | headers sent along with request |
 | url | - | {  } |
+| originalUrl | /user/{id} | /user/123 |
+| method | - | GET, POST, PUT, DELETE etc.. |
 
 
 #### Response
@@ -132,6 +135,7 @@ It is a native *Node Response* object. Along with default properties it also con
 | :---     | :---      |  :---         |
 | send | send([response_code,] responseObject) | It takes optional response code and a response object which whill be sent. <br><br> default: 200 (OK) |
 | reject | reject([response_code], responseObject) | takes optional response_code and rejection responseObject. <br><br>default: 401 (bad request) |
+| setHeader | setHeader(type, value) | takes header type and value |
 
 
 ### Middleware
@@ -158,10 +162,25 @@ class Auth extends Middleware {
 module.exports = Auth;
 ```
 
-### Environments
-
-Specify environment specific settings in env/<environment>.env.js
-
 **Note**:
 
 When response.send() or response.reject() are called in a middleware, the call chain stops and handler method will not be called.
+
+### Environments
+
+Environments for the app can be managed by creating corresponding configuration file
+
+> env/<environment-name>.env.js
+
+This configuration can be used with **NODE_ENV** while running the app.
+
+> $ NODE_ENV=<environment-name> node app.js
+
+**Examples:**
+
+```
+NODE_ENV=production node app.js
+NODE_ENV=stage node app.js
+```
+
+Without NODE_ENV it defaults to `development.env.js`.
