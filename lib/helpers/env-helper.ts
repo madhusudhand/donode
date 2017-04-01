@@ -1,22 +1,19 @@
-'use strict';
-
-const path = require('path');
-const requireDir = require('require-directory');
-const errorHelper = require('./error-helper');
-const defaultEnvSettings = require('../misc/default.env');
+import * as path from 'path';
+import * as requireDir from 'require-directory';
+import { errorHelper } from './error-helper';
+import { defaultEnvConfig } from '../misc/default.env';
+import { EnvConfig } from '../definitions/env-config.interface';
 
 class EnvironmentHelper {
-  constructor() {
-    this.environment = 'development'; // default
-    this.envConfig = null;
-  }
+  public environment: string = 'development';
+  public envConfig: EnvConfig = defaultEnvConfig;
 
   /*
   **       on: BOOTSTRAP
   **
   **  returns environment settings
   */
-  getEnvironmentConfig({ environmentPath, environment }) {
+  getEnvironmentConfig({ environmentPath, environment }: any): EnvConfig {
     return this.envConfig || this.requireEnvironmentConfig(environmentPath, environment);
   }
 
@@ -26,13 +23,12 @@ class EnvironmentHelper {
   **
   **  Load environment settings from given path
   */
-  requireEnvironmentConfig(environmentPath, environment) {
+  requireEnvironmentConfig(environmentPath: string, environment: string): EnvConfig {
     this.environment = environment || this.environment;
     const envFileName = this.environment + '.env';
 
-    let envConfig;
     try {
-      envConfig = requireDir(module, environmentPath)[envFileName]
+      this.envConfig = requireDir(module, environmentPath)[envFileName]
     } catch (e) {
       // show warning and proceed with default config
       errorHelper.throwWarning({
@@ -41,7 +37,7 @@ class EnvironmentHelper {
       });
     }
 
-    this.envConfig = this.validate(envConfig, environment);
+    this.validate(this.envConfig, environment);
     return this.envConfig;
   }
 
@@ -50,7 +46,7 @@ class EnvironmentHelper {
   **
   **  validate the config and set defaults for required properties
   */
-  validate(envConfig, environment) {
+  validate(envConfig: EnvConfig, environment: string): void {
     if (!envConfig) {
       // show warning and proceed with defaults
       errorHelper.throwWarning({
@@ -58,15 +54,10 @@ class EnvironmentHelper {
         line : `falling back to default configuration.`,
         file    : `missing file - ${environment}.env.js`
       });
-
-      return defaultEnvSettings;
     }
-
-    envConfig.port = envConfig.port || defaultEnvSettings.port;
-    return envConfig;
   }
 
 }
 
 // singleton
-module.exports = new EnvironmentHelper();
+export const envHelper: EnvironmentHelper = new EnvironmentHelper();

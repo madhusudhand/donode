@@ -1,4 +1,4 @@
-module.exports =  {
+export const statusCodes = {
   // Success status codes 2xx
   OK: {
     code: 200

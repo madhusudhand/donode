@@ -1,7 +1,6 @@
-'use strict';
-
 const http = require('http');
-const statusCodes = require('./misc/status-codes');
+// import * as http from 'http';
+import { statusCodes } from './misc/status-codes';
 
 ((response) => {
   Object.assign(response, {

@@ -4,6 +4,7 @@
   "description": "Super fast & Lightweight node framework to build RESTful APIs.",
   "main": "index.js",
   "scripts": {
+    "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -29,6 +30,8 @@
     "require-directory": "^2.1.1"
   },
   "devDependencies": {
-    "eslint": "^3.13.1"
+    "@types/node": "^7.0.12",
+    "eslint": "^3.13.1",
+    "typescript": "2.2.1"
   }
 }

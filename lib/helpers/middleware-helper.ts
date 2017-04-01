@@ -1,27 +1,22 @@
-'use strict';
-
-const path = require('path');
-const requireDir = require('require-directory');
-const errorHelper = require('./error-helper');
+import * as path from 'path';
+import * as requireDir from 'require-directory';
+import { errorHelper } from './error-helper';
+import { AppConfig } from '../definitions/app-config.interface';
+import { Route } from '../definitions/route.interface';
 
 class MiddlewareHelper {
-  constructor() {
-    // holds middleware classes
-    this._middlewareClasses = [];
-    // holds middleware instances
-    this._middleware = {};
-
-    this._appConfig = {};
-  }
+  private middlewareClasses: any[] = [];
+  private middleware = {};
+  private appConfig: AppConfig;
 
   /*
   **       on: BOOTSTRAP
   **
   **  Load middleware files from the given path
   */
-  requireMiddleware(config) {
-    this._appConfig = config;
-    this._middlewareClasses = requireDir(module,
+  requireMiddleware(config: AppConfig) {
+    this.appConfig = config;
+    this.middlewareClasses = requireDir(module,
                                          config.middlewarePath,
                                          { exclude: path => (/\.test\.js$/.test(path)) }
                                         );
@@ -32,7 +27,7 @@ class MiddlewareHelper {
   **
   **  Returns flat list of middleware for a given route
   */
-  getRouteMiddleware(route) {
+  getRouteMiddleware(route: Route) {
     // validate route middleware object
     this._validateMiddleware(route);
 
@@ -131,10 +126,10 @@ class MiddlewareHelper {
   **
   **  fetch the corresponding class
   */
-  _getMiddlewareClass(route, middleware) {
+  _getMiddlewareClass(route: Route, middleware: string) {
     // check if cached
-    if (this._middleware[middleware]) {
-      return this._middleware[middleware];
+    if (this.middleware[middleware]) {
+      return this.middleware[middleware];
     }
 
     const middlewareName = path.basename(middleware);
@@ -143,11 +138,11 @@ class MiddlewareHelper {
       middlewarePath = '';
     }
 
-    let middlewareClasses = null;
+    let middlewareClasses: any = null;
 
     if (middlewarePath) {
       for (let key of middlewarePath.split(path.delimiter)) {
-        middlewareClasses = this._middlewareClasses[key];
+        middlewareClasses = this.middlewareClasses[key];
 
         // path not found
         if (!middlewareClasses) {
@@ -160,7 +155,7 @@ class MiddlewareHelper {
         }
       }
     } else {
-      middlewareClasses = this._middlewareClasses;
+      middlewareClasses = this.middlewareClasses;
     }
 
     const MiddlewareClass = middlewareClasses[middlewareName];
@@ -183,7 +178,7 @@ class MiddlewareHelper {
       errorHelper.throwError({
         error: `Middleware '${middlewareName}' is not a 'Class' or 'module.exports' is missing in the file.`,
         line : `Route: { path: ${route.path}, method: ${route.method}, middleware: [${middleware}] }`,
-        file : `${path.join(this._appConfig.relMiddlewarePath, middleware)}.js`,
+        file : `${path.join(this.appConfig.relMiddlewarePath, middleware)}.js`,
         hint : `A middleware is a class and should be exported. check if module.exports = ClassName; is missing.`
       });
     }
@@ -193,14 +188,14 @@ class MiddlewareHelper {
       errorHelper.throwError({
         error: `method 'handle' not defined in '${middlewareName}'`,
         line : `Route: { path: ${route.path}, method: ${route.method}, middleware: [${middleware}] }`,
-        file : `${path.join(this._appConfig.relMiddlewarePath, middleware)}.js`,
+        file : `${path.join(this.appConfig.relMiddlewarePath, middleware)}.js`,
         hint : `add the method named 'handle' in middleware class.`
       });
     }
 
     // cache
-    this._middleware[middleware] = MiddlewareClass;
-    return this._middleware[middleware];
+    this.middleware[middleware] = MiddlewareClass;
+    return this.middleware[middleware];
   }
 
 
@@ -219,4 +214,4 @@ class MiddlewareHelper {
 }
 
 // singleton
-module.exports = new MiddlewareHelper();
+export const middlewareHelper: MiddlewareHelper = new MiddlewareHelper();

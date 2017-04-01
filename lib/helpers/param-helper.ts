@@ -1,6 +1,6 @@
-'use strict';
-
 class ParamHelper {
+  public paramExpression;
+  
   constructor() {
     this.paramExpression = new RegExp('\{[A-Za-z]+[A-Za-z0-9]*\}');
   }
@@ -20,4 +20,4 @@ class ParamHelper {
 }
 
 // singleton
-module.exports = new ParamHelper();
+export const paramHelper: ParamHelper = new ParamHelper();

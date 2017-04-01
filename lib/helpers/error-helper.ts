@@ -1,9 +1,6 @@
-'use strict';
-const chalk = require('chalk');
+import * as chalk from 'chalk';
 
 class ErrorHelper {
-  constructor() {}
-
 
   /*
   **       on: ERROR
@@ -110,4 +107,4 @@ class ErrorHelper {
 }
 
 // singleton
-module.exports = new ErrorHelper();
+export const errorHelper = new ErrorHelper();

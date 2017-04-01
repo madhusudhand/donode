@@ -1,7 +1,6 @@
-'use strict';
-
 const http = require('http');
-const url = require('url');
+// import * as http from 'http';
+import * as url from 'url';
 
 ((request) => {
   Object.assign(request, {

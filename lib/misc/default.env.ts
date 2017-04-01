@@ -1,8 +1,10 @@
-module.exports = {
+import { EnvConfig } from '../definitions/env-config.interface';
+
+export const defaultEnvConfig: EnvConfig = {
   /*
   **  host
   */
-  host: '',
+  hostname: '',
 
   /*
   **  port number

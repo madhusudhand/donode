@@ -1,11 +1,11 @@
-'use strict';
-
-const routeHelper = require('./helpers/route-helper');
-const pathHelper = require('./helpers/path-helper');
-const errorHelper = require('./helpers/error-helper');
-const middlewareHelper = require('./helpers/middleware-helper');
+import { routeHelper } from './helpers/route-helper';
+import { pathHelper } from './helpers/path-helper';
+import { errorHelper } from './helpers/error-helper';
+import { middlewareHelper } from './helpers/middleware-helper';
 
 class Router {
+  private _routes;
+
   constructor() {
     // route array set from the app.
     this._routes = {};
@@ -41,4 +41,4 @@ class Router {
 
 }
 
-module.exports = new Router();
+export const router = new Router();

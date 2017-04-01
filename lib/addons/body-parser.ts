@@ -1,21 +1,19 @@
 'use strict';
 
-const querystring = require('querystring');
+import * as querystring from 'querystring';
 // const IncomingForm = require('formidable').IncomingForm;
 
 class BodyParser {
-  constructor() {}
-
-  parse(request) {
+  parse(request): void {
     switch (request.getContentType()) {
       case 'application/json':
-        return this._parseJson(request);
+        this._parseJson(request);
         break;
       case 'application/x-www-form-urlencoded':
-        return this._parseUrlEncoded(request);
+        this._parseUrlEncoded(request);
         break;
       case 'multipart/form-data':
-        return this._parseMultipart(request);
+        this._parseMultipart(request);
         break;
     }
   }
@@ -43,4 +41,4 @@ class BodyParser {
   }
 }
 
-module.exports = new BodyParser();
+export const bodyParser = new BodyParser();

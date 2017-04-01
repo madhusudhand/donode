@@ -1,9 +1,6 @@
-'use strict';
-
 class PathHelper {
-  constructor() {
-    this.segments = [];
-  }
+  public segments = [];
+  public routeParams = {};
 
   /*
   **       on: REQUEST
@@ -83,4 +80,4 @@ class PathHelper {
 }
 
 // singleton
-module.exports = new PathHelper();
+export const pathHelper = new PathHelper();

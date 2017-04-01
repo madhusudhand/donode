@@ -1,8 +1,6 @@
-'use strict';
-const errorHelper = require('./error-helper');
+import { errorHelper } from './error-helper';
 
 class HeadersHelper {
-  constructor() {}
 
   /*
   **       on: BOOTSTRAP
@@ -132,4 +130,4 @@ class HeadersHelper {
 }
 
 // singleton
-module.exports = new HeadersHelper();
+export const headersHelper = new HeadersHelper();

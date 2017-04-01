@@ -1,23 +1,22 @@
-'use strict';
+import * as path from 'path';
+import * as requireDir from 'require-directory';
 
-const path = require('path');
-const requireDir = require('require-directory');
-const paramHelper = require('./param-helper');
-const errorHelper = require('./error-helper');
-const middlewareHelper = require('./middleware-helper');
-const headersHelper = require('./headers-helper');
-const appHeaders = require('../headers');
+import { paramHelper } from './param-helper';
+import { errorHelper } from './error-helper';
+import { middlewareHelper } from './middleware-helper';
+import { headersHelper } from './headers-helper';
+import { appHeaders } from '../headers';
 
 class RouteHelper {
-  constructor() {
-    // holds controller classes
-    this._controllerClasses = [];
-    // holds controller instances
-    this._controllers = {};
+  private _controllerClasses = [];
+  private _controllers = {};
+  private _appConfig = {
+    controllerPath: null,
+    envConfig: null,
+    relControllerPath: null,
+  };
 
-    // app config
-    this._appConfig = {};
-  }
+  public routes = {};
 
   /*
   **       on: BOOTSTRAP
@@ -62,7 +61,7 @@ class RouteHelper {
                                          { exclude: path => (/\.test\.js$/.test(path)) }
                                         );
 
-    this._processRouteConfig(routeConfig);
+    this._processRouteConfig(routeConfig, null);
     return this.routes;
   }
 
@@ -356,4 +355,4 @@ class RouteHelper {
 }
 
 // singleton
-module.exports = new RouteHelper();
+export const routeHelper = new RouteHelper();

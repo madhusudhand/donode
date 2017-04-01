@@ -1,7 +1,8 @@
-'use strict';
-const headersHelper = require('./helpers/headers-helper');
+import { headersHelper } from './helpers/headers-helper';
 
 class Headers {
+  public headerGroups;
+  
   constructor() {
     this.headerGroups = {};
   }
@@ -36,4 +37,4 @@ class Headers {
   }
 }
 
-module.exports = new Headers();
+export const appHeaders = new Headers();

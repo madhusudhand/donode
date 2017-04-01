@@ -1,18 +1,13 @@
-'use strict';
+import './request';
+import './response';
 
-require('./request');
-require('./response');
-
-const router = require('./router');
-const appHeaders = require('./headers');
-const appConfig = require('./app-config');
-
-const status = require('./misc/status-codes');
-const bodyParser = require('./addons/body-parser');
+import { router } from './router';
+import { appHeaders } from './headers';
+import { appConfig } from './app-config';
+import { statusCodes } from './misc/status-codes';
+import { bodyParser } from './addons/body-parser';
 
 class Server {
-  constructor() {}
-
   /*
   **       on: BOOTSTRAP
   **
@@ -65,12 +60,12 @@ class Server {
           // execute middleware and then handler
           return this._runMiddlewareChain(request, response, match.route);
         } catch (err) {
-          return response.reject(status.InternalServerError, err);
+          return response.reject(statusCodes.InternalServerError, err);
         }
       });
     } else {
       // if no route matched
-      return response.reject(status.NotFound);
+      return response.reject(statusCodes.NotFound);
     }
   }
 
@@ -151,4 +146,4 @@ class Server {
 
 }
 
-module.exports = new Server();
+export const server = new Server();

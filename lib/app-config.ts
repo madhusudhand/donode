@@ -1,22 +1,20 @@
-'use strict';
-
-const path = require('path');
-const envHelper = require('./helpers/env-helper');
+import * as path from 'path';
+import { envHelper } from './helpers/env-helper';
+import { AppConfig } from './definitions/app-config.interface';
 
 class Config {
-  constructor() {
-    this.config = {};
-  }
+  public config: AppConfig;
 
-  init(config) {
+  init(config: any) {
     this._validate(config);
 
     this.config = Object.assign({}, config, {
       middlewarePath: path.join(config.appRoot, config.appDir, config.middlewareDir),
       controllerPath: path.join(config.appRoot, config.appDir, config.controllerDir),
-      environmentPath: path.join(config.appRoot, config.envDir),
       relMiddlewarePath: path.join(config.appDir, config.middlewareDir),
-      relControllerPath: path.join(config.appDir, config.controllerDir)
+      relControllerPath: path.join(config.appDir, config.controllerDir),
+      environmentPath: path.join(config.appRoot, config.envDir),
+      relEnvironmentPath: path.join(config.envDir),
     });
 
     // get environment settings
@@ -40,14 +38,14 @@ class Config {
   **    - controllerDir should exist
   **    - middlewareDir should exist
   */
-  _validate(config) {
+  _validate(config: any) {
     // TODO: add validations
   }
 
 
-  _postValidate(config) {
+  _postValidate(config: any) {
     // TODO: add validations
   }
 }
 
-module.exports = new Config();
+export const appConfig: Config = new Config();
