@@ -6,15 +6,12 @@ import { errorHelper } from './error-helper';
 import { middlewareHelper } from './middleware-helper';
 import { headersHelper } from './headers-helper';
 import { appHeaders } from '../headers';
+import { AppConfig } from '../definitions/app-config.interface';
 
 class RouteHelper {
   private _controllerClasses = [];
   private _controllers = {};
-  private _appConfig = {
-    controllerPath: null,
-    envConfig: null,
-    relControllerPath: null,
-  };
+  private _appConfig: AppConfig;
 
   public routes = {};
 
@@ -104,11 +101,11 @@ class RouteHelper {
   _processRoute(route) {
     // split the handler string "path/ControllerName@methodName"
     const handler = this._splitHandler(route.handler);
-    const controllerKey = path.join(handler.controllerPath, handler.controllerName);
+    const controllerKey: string = path.join(handler.controllerPath, handler.controllerName);
 
     // check if the controller has already validated.
     if (!this._controllers[controllerKey]) {
-      let ctrlClasses = null;
+      let ctrlClasses: any = null;
 
       // if the controller prefixed with some path
       if (handler.controllerPath) {
