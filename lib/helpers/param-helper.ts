@@ -1,6 +1,6 @@
 class ParamHelper {
-  public paramExpression;
-  
+  public paramExpression: RegExp;
+
   constructor() {
     this.paramExpression = new RegExp('\{[A-Za-z]+[A-Za-z0-9]*\}');
   }
@@ -13,8 +13,8 @@ class ParamHelper {
   **  param pattern
   **    - {paramName}
   */
-  parseParams(routePath) {
-    const params = routePath.match(this.paramExpression);
+  parseParams(routePath: string): string[] {
+    const params: string[] = routePath.match(this.paramExpression);
     return params ? params.map(param => param.slice(1,-1)) : [];
   }
 }

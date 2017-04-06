@@ -1,11 +1,11 @@
-import * as path from 'path';
+const path = require('path');
 import { envHelper } from './helpers/env-helper';
-import { AppConfig } from './definitions/app-config.interface';
+import { AppConfig } from './definitions';
 
 class Config {
   public config: AppConfig;
 
-  init(config: any) {
+  init(config: AppConfig) {
     this._validate(config);
 
     this.config = Object.assign({}, config, {
@@ -38,12 +38,12 @@ class Config {
   **    - controllerDir should exist
   **    - middlewareDir should exist
   */
-  _validate(config: any) {
+  _validate(config: AppConfig) {
     // TODO: add validations
   }
 
 
-  _postValidate(config: any) {
+  _postValidate(config: AppConfig) {
     // TODO: add validations
   }
 }

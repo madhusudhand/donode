@@ -4,7 +4,7 @@ import * as querystring from 'querystring';
 // const IncomingForm = require('formidable').IncomingForm;
 
 class BodyParser {
-  parse(request): void {
+  parse(request: any): void {
     switch (request.getContentType()) {
       case 'application/json':
         this._parseJson(request);
@@ -18,16 +18,16 @@ class BodyParser {
     }
   }
 
-  _parseJson(request) {
+  _parseJson(request: any) {
     request.body = JSON.parse(request.body);
   }
 
-  _parseUrlEncoded(request) {
+  _parseUrlEncoded(request: any) {
     // console.log(request.body);
     request.body = querystring.parse(request.body);
   }
 
-  _parseMultipart(request) {
+  _parseMultipart(request: any) {
     // var form = new IncomingForm();
     // form.onPart(() => {
     //   console.log('onPart called');

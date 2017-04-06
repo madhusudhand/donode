@@ -8,12 +8,12 @@ export interface AppConfig {
   envDir             : string,
 
   // paths
-  controllerPath     : string,
-  relControllerPath  : string,
-  middlewarePath     : string,
-  relMiddlewarePath  : string,
-  environmentPath    : string,
-  relEnvironmentPath : string,
+  controllerPath     ?: string,
+  relControllerPath  ?: string,
+  middlewarePath     ?: string,
+  relMiddlewarePath  ?: string,
+  environmentPath    ?: string,
+  relEnvironmentPath ?: string,
 
   // environment
   environment        : string,

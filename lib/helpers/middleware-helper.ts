@@ -1,12 +1,11 @@
-import * as path from 'path';
-import * as requireDir from 'require-directory';
+const path = require('path');
+const requireDir = require('require-directory');
 import { errorHelper } from './error-helper';
-import { AppConfig } from '../definitions/app-config.interface';
-import { Route } from '../definitions/route.interface';
+import { AppConfig, Route } from '../definitions';
 
 class MiddlewareHelper {
   private middlewareClasses: any[] = [];
-  private middleware = {};
+  private middleware: any = {};
   private appConfig: AppConfig;
 
   /*
@@ -18,7 +17,7 @@ class MiddlewareHelper {
     this.appConfig = config;
     this.middlewareClasses = requireDir(module,
                                          config.middlewarePath,
-                                         { exclude: path => (/\.test\.js$/.test(path)) }
+                                         { exclude: (path: string) => (/\.test\.js$/.test(path)) }
                                         );
   }
 
@@ -32,7 +31,7 @@ class MiddlewareHelper {
     this._validateMiddleware(route);
 
     // collect middleware from parent hierarchy
-    let middleware = this._collectParentMiddleware(route.parent);
+    let middleware: string[] = this._collectParentMiddleware(route.parent);
 
     // append current route middleware
     middleware = middleware.concat(route.middleware.all).concat(route.middleware.current);
@@ -57,7 +56,7 @@ class MiddlewareHelper {
   **
   **  Validate the middleware object
   */
-  _validateMiddleware(route) {
+  _validateMiddleware(route: Route) {
     if (!route.middleware) {
       route.middleware = { all: [], current: [], children: [] };
       return;
@@ -104,7 +103,7 @@ class MiddlewareHelper {
   **
   **  Recursively collect all middleware from parent hierarchy
   */
-  _collectParentMiddleware(route) {
+  _collectParentMiddleware(route?: Route): string[] {
     if (!route) return [];
 
     this._validateMiddleware(route);
@@ -115,7 +114,7 @@ class MiddlewareHelper {
 
     return collect();
 
-    function collect() {
+    function collect(): string[] {
       return [].concat(route.middleware.all).concat(route.middleware.children);
     }
   }
@@ -201,9 +200,9 @@ class MiddlewareHelper {
 
 
 
-  _checkForDupes(middleware) {
+  _checkForDupes(middleware: string[]): string {
     // check for dupes
-    for (let m of middleware) {
+    for (let m: string of middleware) {
       if (middleware.indexOf(m) !== middleware.lastIndexOf(m)) {
         return m;
       }

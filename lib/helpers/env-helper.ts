@@ -1,8 +1,8 @@
-import * as path from 'path';
-import * as requireDir from 'require-directory';
+const path = require('path');
+const requireDir  = require('require-directory')
 import { errorHelper } from './error-helper';
 import { defaultEnvConfig } from '../misc/default.env';
-import { EnvConfig } from '../definitions/env-config.interface';
+import { EnvConfig } from '../definitions';
 
 class EnvironmentHelper {
   public environment: string = 'development';
@@ -25,7 +25,7 @@ class EnvironmentHelper {
   */
   requireEnvironmentConfig(environmentPath: string, environment: string): EnvConfig {
     this.environment = environment || this.environment;
-    const envFileName = this.environment + '.env';
+    const envFileName: string = this.environment + '.env';
 
     try {
       this.envConfig = requireDir(module, environmentPath)[envFileName]

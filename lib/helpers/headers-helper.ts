@@ -1,4 +1,5 @@
 import { errorHelper } from './error-helper';
+import { Route } from '../definitions';
 
 class HeadersHelper {
 
@@ -11,7 +12,7 @@ class HeadersHelper {
   **    { key: {name, value} }
   **    { key: [ {name, value} ] }
   */
-  validateHeaderDefinitions(headers) {
+  validateHeaderDefinitions(headers: any): void {
     // root value should be an object and (not NULL or ARRAY)
     if (!headers || typeof headers !== 'object' || Array.isArray(headers)) {
       errorHelper.throwError({
@@ -59,9 +60,6 @@ class HeadersHelper {
   }
 
 
-
-
-
   /*
   **       on: BOOTSTRAP
   **
@@ -76,7 +74,7 @@ class HeadersHelper {
   **          children: [ of strings ]
   **        }
   */
-  validateRouteHeaders(appHeaders, route) {
+  validateRouteHeaders(appHeaders: any, route: Route) {
     // optional
     if (!route.headers) return;
 
@@ -112,10 +110,10 @@ class HeadersHelper {
   **  Make sure this always returns an array
   **  either empty or flat list of objects {}
   */
-  getHeaders(appHeaders, headerKeys) {
+  getHeaders(appHeaders: any, headerKeys: any) {
     // route should accept an array
     if (!Array.isArray(headerKeys)) return [];
-    return this._flatMap(headerKeys, (key) => appHeaders.__getHeaders(key));
+    return this._flatMap(headerKeys, (key: any) => appHeaders.__getHeaders(key));
   }
 
 
@@ -123,7 +121,7 @@ class HeadersHelper {
   /*
   **  PRIVATE
   */
-  _flatMap(arr, lambda) {
+  private _flatMap(arr: any[], lambda: any) {
     return Array.prototype.concat.apply([], arr.map(lambda));
   }
 

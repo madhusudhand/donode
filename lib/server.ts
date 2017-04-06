@@ -7,6 +7,8 @@ import { appConfig } from './app-config';
 import { statusCodes } from './misc/status-codes';
 import { bodyParser } from './addons/body-parser';
 
+import { Route } from './definitions';
+
 class Server {
   /*
   **       on: BOOTSTRAP
@@ -19,7 +21,7 @@ class Server {
   **  returns
   **    - server
   */
-  create({ config, routes, headers }) {
+  create({ config, routes, headers }: any) {
     appConfig.init(config);
 
     // collect headers
@@ -41,7 +43,7 @@ class Server {
   **  listener for http request
   **
   */
-  _onRequest(request, response) {
+  _onRequest(request: any, response: any) {
     // parse the request
     request.__parseRequest();
 
@@ -78,9 +80,9 @@ class Server {
   **  inputs
   **    - callback
   */
-  _onData(request, onComplete) {
+  _onData(request: any, onComplete: any) {
     let body = '';
-    request.on('data', (data) => {
+    request.on('data', (data: any) => {
       body += data;
       // NOTE: this limits the multipart data
       // TODO: handle multipart data
@@ -108,7 +110,7 @@ class Server {
   **  inputs
   **    - http request, http response, matching route
   */
-  _runMiddlewareChain(request, response, route) {
+  _runMiddlewareChain(request: any, response: any, route: Route) {
     let index = 0;
     const n = Array.isArray(route.middleware) ? route.middleware.length : 0;
 
@@ -138,7 +140,7 @@ class Server {
   **  inputs
   **    - http response, route headers
   */
-  _attachHeaders(response, headers) {
+  _attachHeaders(response: any, headers: any) {
     for (let i = 0; i < headers.length; i++) {
       response.setHeader(headers[i].name, headers[i].value);
     }

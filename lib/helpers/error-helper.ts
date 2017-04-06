@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+const chalk = require('chalk');
 
 class ErrorHelper {
 
@@ -18,7 +18,7 @@ class ErrorHelper {
   **          hint : string or [ of strings ]
   **        }
   */
-  throwError(err) {
+  throwError(err: any): void {
     if (typeof err === 'string') {
       console.log(chalk.bold.red('ERROR: ') + chalk.red(err));
       this._exit();
@@ -66,7 +66,7 @@ class ErrorHelper {
   **          hint   : string or [ of strings ]
   **        }
   */
-  throwWarning(wrn) {
+  throwWarning(wrn: any): void {
     if (typeof wrn === 'string') {
       console.log(chalk.bold.yellow('WARNING: ') + chalk.yellow(wrn));
     }
@@ -100,7 +100,7 @@ class ErrorHelper {
   /*
   **  PRIVATE
   */
-  _exit() {
+  _exit(): void {
     console.log();
     process.exit();
   }

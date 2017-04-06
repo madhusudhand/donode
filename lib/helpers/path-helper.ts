@@ -1,3 +1,5 @@
+import { Route, Url } from '../definitions';
+
 class PathHelper {
   public segments = [];
   public routeParams = {};
@@ -15,7 +17,7 @@ class PathHelper {
   **  returns
   **    - matching route or null
   */
-  matchRoute(method, url, routes) {
+  matchRoute(method: string, url: Url, routes: any) {
     // TODO: avoid class variables. make it functional
     // reset as it is a class variable
     this.routeParams = {};
@@ -24,7 +26,7 @@ class PathHelper {
     this.segments = url.pathname.split('/').slice(1);
 
     // get the routes for the current request method
-    const _routes = routes[method.toLowerCase()] || [];
+    const _routes: Route[] = routes[method.toLowerCase()] || [];
 
     for (let i = 0, l = _routes.length; i < l; i++) {
       // if the route matches with url path
@@ -52,7 +54,7 @@ class PathHelper {
   **  returns
   **    - matching route or null
   */
-  _matchSegments(route) {
+  _matchSegments(route: Route) {
     // TODO: avoid class variables. make it functional
     // clear params as it is a class variable
     this.routeParams = {};

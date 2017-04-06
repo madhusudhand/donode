@@ -1,5 +1,4 @@
 const http = require('http');
-// import * as http from 'http';
 import { statusCodes } from './misc/status-codes';
 
 ((response) => {
@@ -12,7 +11,7 @@ import { statusCodes } from './misc/status-codes';
     reject,
   });
 
-  function send(status, data) {
+  function send(status: any, data: any): void {
     // default -> 200: OK
     // TODO: add validation for 1xx, 2xx, 3xx range of codes
     if (typeof status === 'number') {
@@ -33,7 +32,7 @@ import { statusCodes } from './misc/status-codes';
     _send.call(this, status, data);
   }
 
-  function reject(status, error) {
+  function reject(status: any, error: any): void {
     // default -> 400: BadRequest
     // TODO: add validation for 4xx, 5xx range of codes
     if (typeof status === 'number') {
@@ -49,7 +48,7 @@ import { statusCodes } from './misc/status-codes';
 
 
   // private methods
-  function _send(status, data) {
+  function _send(status: any, data: any): void {
     if (!data) {
       status = statusCodes.NoContent;
     }
@@ -63,17 +62,17 @@ import { statusCodes } from './misc/status-codes';
     this.end(JSON.stringify(data || status.response || null, null, 2));
   }
 
-  function _reject(status, error) {
+  function _reject(status: any, error: any): void {
     _setHeaders.call(this);
     this.writeHead(status.code);
     this.end(JSON.stringify(error || status.response || null, null, 2));
   }
 
-  function _setHeaders() {
+  function _setHeaders(): void {
     this.setHeader('Content-Type', 'application/json; charset=UTF-8');
   }
 
-  function _isValidResponse(data) {
+  function _isValidResponse(data: any): boolean {
     // accepts null, {}, []
     return typeof data === 'object' || typeof data === 'undefined';
   }

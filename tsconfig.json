@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES2015",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "sourceMap": false,
     "removeComments": true,
     "strictNullChecks": true,

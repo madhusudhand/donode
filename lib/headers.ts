@@ -1,8 +1,8 @@
 import { headersHelper } from './helpers/headers-helper';
 
 class Headers {
-  public headerGroups;
-  
+  public headerGroups: any;
+
   constructor() {
     this.headerGroups = {};
   }
@@ -15,7 +15,7 @@ class Headers {
   **  inputs
   **    - header groups
   */
-  collect(headerGroups, appConfig) {
+  collect(headerGroups: any, appConfig: any): void {
     // skip validations in prod
     if (!appConfig.envConfig.production) {
       headersHelper.validateHeaderDefinitions(headerGroups || {});
@@ -32,7 +32,7 @@ class Headers {
   **  inputs
   **    - header group name
   */
-  __getHeaders(headerGroupName) {
+  __getHeaders(headerGroupName: any): any {
     return this.headerGroups[headerGroupName];
   }
 }

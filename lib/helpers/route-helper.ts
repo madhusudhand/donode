@@ -1,19 +1,20 @@
 import * as path from 'path';
-import * as requireDir from 'require-directory';
+// import * as requireDir from 'require-directory';
+const requireDir = require('require-directory');
 
 import { paramHelper } from './param-helper';
 import { errorHelper } from './error-helper';
 import { middlewareHelper } from './middleware-helper';
 import { headersHelper } from './headers-helper';
 import { appHeaders } from '../headers';
-import { AppConfig } from '../definitions/app-config.interface';
+import { AppConfig, RouteConfig, RouteMap, RouteHandler } from '../definitions';
 
 class RouteHelper {
-  private _controllerClasses = [];
-  private _controllers = {};
+  private _controllerClasses: any = {};
+  private _controllers: any = {};
   private _appConfig: AppConfig;
 
-  public routes = {};
+  public routes: RouteMap = {};
 
   /*
   **       on: BOOTSTRAP
@@ -24,7 +25,7 @@ class RouteHelper {
   **    - route config
   **      - [ of objects ]
   */
-  validateRouteConfig(routeConfig) {
+  validateRouteConfig(routeConfig: RouteConfig[]) {
     if (!Array.isArray(routeConfig)) {
       errorHelper.throwError({
         error: 'not a valid route list.',
@@ -47,18 +48,18 @@ class RouteHelper {
   **  returns
   **    - list of processed routes
   */
-  collectRoutes(routeConfig, options) {
+  collectRoutes(routeConfig: RouteConfig[], appConfig: AppConfig) {
     // init routes
     this.routes = {};
-    this._appConfig = options;
+    this._appConfig = appConfig;
 
     // collect all controllers from the given controllerDir
     this._controllerClasses = requireDir(module,
                                          this._appConfig.controllerPath,
-                                         { exclude: path => (/\.test\.js$/.test(path)) }
+                                         { exclude: (path: string) => (/\.test\.js$/.test(path)) }
                                         );
 
-    this._processRouteConfig(routeConfig, null);
+    this._processRouteConfig(routeConfig);
     return this.routes;
   }
 
@@ -68,7 +69,7 @@ class RouteHelper {
   **  recursive call process each route config item
   **
   */
-  _processRouteConfig(routeConfig, parent) {
+  _processRouteConfig(routeConfig: RouteConfig[], parent?: RouteConfig) {
 
     for (let route of routeConfig) {
       // "method" property is mandatory to consider it as a valid route.
@@ -98,9 +99,9 @@ class RouteHelper {
   **  process a given route
   **
   */
-  _processRoute(route) {
+  _processRoute(route: RouteConfig): Route {
     // split the handler string "path/ControllerName@methodName"
-    const handler = this._splitHandler(route.handler);
+    const handler: RouteHandler = this._splitHandler(route.handler);
     const controllerKey: string = path.join(handler.controllerPath, handler.controllerName);
 
     // check if the controller has already validated.
@@ -192,7 +193,7 @@ class RouteHelper {
   **  validate a given route configuration
   **
   */
-  _validateRoute(route) {
+  _validateRoute(route: Route): void {
     // path
     // REQUIRED
     if (!route.path) {
@@ -247,7 +248,7 @@ class RouteHelper {
   **  push the processed route to the app route list
   **  check for the conflicts if any
   */
-  _pushRoute(route) {
+  private _pushRoute(route: Route): void {
     const method = route.method.toLowerCase();
 
     if (!Array.isArray(this.routes[method])) {
@@ -282,7 +283,7 @@ class RouteHelper {
   **  traverse though the parent hierarchy to fetch complete route path
   **
   */
-  _getRoutePath(route) {
+  private _getRoutePath(route: Route): string {
     if (!route) return '';
     return route.parent ? (this._getRoutePath(route.parent) + route.path) : route.path;
   }
@@ -293,7 +294,7 @@ class RouteHelper {
   **  traverse though the parent hierarchy to fetch complete route path
   **
   */
-  _trimTrailingSlash(routePath) {
+  private _trimTrailingSlash(routePath: string): string {
     return (routePath.length > 1 && routePath[routePath.length-1] === '/')
          ? routePath.slice(0, -1) : routePath;
   }
@@ -304,9 +305,9 @@ class RouteHelper {
   **  get the route footprint
   **  replace route params with "?"
   */
-  _getRouteFootprint(routePath) {
-    const segments = this._getSegments(routePath);
-    return '/' + segments.map((s) => this._hasParams(s) ? '?' : s).join('/');
+  private _getRouteFootprint(routePath: string): string {
+    const segments: string[] = this._getSegments(routePath);
+    return '/' + segments.map((s: string) => this._hasParams(s) ? '?' : s).join('/');
   }
 
   /*
@@ -314,7 +315,7 @@ class RouteHelper {
   **
   **  get the segemnts of the route with "/" separator
   */
-  _getSegments(routePath) {
+  private _getSegments(routePath: string): string[] {
     return this._trimTrailingSlash(routePath).split('/').slice(1);
   }
 
@@ -323,7 +324,7 @@ class RouteHelper {
   **
   **  check if the route has params
   */
-  _hasParams(routePath) {
+  private _hasParams(routePath: string): boolean {
     return routePath.indexOf('{') > -1;
   }
 
@@ -334,17 +335,17 @@ class RouteHelper {
   **  inputs
   **    - handler string  -> "path/to/ControllerName@methodName"
   */
-  _splitHandler(handlerString) {
-    const hs = handlerString.split('@');
-    const controllerName = path.basename(hs[0]);
-    let controllerPath = path.dirname(hs[0]) || '';
+  private _splitHandler(handlerString: string): RouteHandler {
+    const hs: string[] = handlerString.split('@');
+    const controllerName: string = path.basename(hs[0]);
+    let controllerPath: string = path.dirname(hs[0]) || '';
     if (controllerPath.charAt(0) === '.') {
       controllerPath = '';
     }
 
     return {
-      controllerName: controllerName,
-      controllerPath: controllerPath,
+      controllerName,
+      controllerPath,
       methodName: hs.length > 1 ? hs[1] : null
     };
   }

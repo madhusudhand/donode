@@ -1,4 +1,4 @@
-import { EnvConfig } from '../definitions/env-config.interface';
+import { EnvConfig } from '../definitions';
 
 export const defaultEnvConfig: EnvConfig = {
   /*
