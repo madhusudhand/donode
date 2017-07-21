@@ -119,8 +119,8 @@ It is a native *Node Request* object. Along with default properties it also cont
 
 | Property | Route     |  Values  |
 | :---     | :---      |  :---         |
-| queryParams | /user?p1=123&p2=donode | { p1: 123, p2: 'donode' } |
-| routeParams | /user/{id} | { id: 123 } |
+| query | /user?p1=123&p2=donode | { p1: 123, p2: 'donode' } |
+| params | /user/{id} | { id: 123 } |
 | body | - | payload sent along with request |
 | headers | - | headers sent along with request |
 | url | - | {  } |
